@@ -1,8 +1,9 @@
 package data.structure.chapter1;
 
 import java.util.Arrays;
+import java.util.Date;
 
-public class No_6 {
+public class No_1_6 {
     static int count = 0;
     public static void permute(String str){
         char[] arr = str.toCharArray();
@@ -38,7 +39,15 @@ public class No_6 {
                         if(arr[j] == arr[i]){
                             continue loop;
                         }
+                      //检查8皇后条件start
+//                          int q1 = Integer.valueOf(arr[j]+"");
+//                          int q2 = Integer.valueOf(arr[i]+"");
+//                          if(j-i == q2-q1  || j-i == q1-q2){
+//                              continue loop;
+//                          }
+                        //end
                     }
+                    
                 char tmp = arr[low];
                 arr[low] = arr[i];
                 arr[i] = tmp;
@@ -57,7 +66,10 @@ public class No_6 {
     public static void permute2(String str){
     }
     public static void main(String[] args) {
+        Date d1 = new Date();
         permute ("01234567");
+        System.out.println(" ");
         System.out.println("符合条件的序列有："+count+"个");
+        System.out.println("运行时间："+(new Date().getTime() - d1.getTime())+"毫秒");
     }
 }

@@ -1,6 +1,6 @@
 package data.structure.chapter1;
 
-public class No_5 {
+public class No_1_5 {
     public static int f(int n){
         if(n == 0){
             return 0;

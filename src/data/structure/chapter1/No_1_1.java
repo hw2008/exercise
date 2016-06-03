@@ -15,7 +15,7 @@ import data.structure.chapter7.SortFunction;
  * @author Aaron
  *
  */
-public class No_1 {
+public class No_1_1 {
     //方法1： 前k位  冒泡排序
     /**
      * 
