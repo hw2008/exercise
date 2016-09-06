@@ -83,6 +83,33 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         
         return p.data;
     }
+    
+    public void removeAll(Iterable<? extends AnyType> items){
+        Iterator<? extends AnyType> it = (Iterator<? extends AnyType>) items.iterator();
+        Iterator<AnyType> thisIt = this.iterator();
+        AnyType thisData = thisIt.next();
+        AnyType itemsData = it.next();
+        //有序的removeAll
+//        while(thisData!=null && itemsData!=null){
+//            if(thisData.equals(itemsData)){
+//                thisIt.remove();
+//                thisData = thisIt.hasNext() ? thisIt.next() : null;
+//            }
+//            itemsData = it.hasNext() ? it.next() : null;
+//        }
+        //无序的removeAll
+        while(thisData!=null){
+            while(itemsData!=null){
+                if(thisData.equals(itemsData)){
+                    thisIt.remove();
+                    thisData = thisIt.hasNext() ? thisIt.next() : null;
+                }
+                itemsData = it.hasNext() ? it.next() : null;
+            }
+            thisData = thisIt.hasNext() ? thisIt.next() : null;
+        }
+    }
+
     private Node<AnyType> getNode(int idx){
         Node<AnyType> p;
         if(idx < 0 || idx > size()){
@@ -103,6 +130,10 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         return p;
     }
     
+    /**  No_3_3
+     * @param newItem
+     * @return
+     */
     public boolean contains(AnyType newItem){
 //        Node<AnyType> p = this.beginMarker;
 //        while(true){
@@ -118,6 +149,7 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         while( p != this.endMarker && !(p.data.equals(newItem))){
             p = p.next;
         }
+        return p != this.endMarker;
         
     }
     
@@ -125,7 +157,15 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
     public Iterator<AnyType> iterator() {
         return new LinkedListIterator();
     }
-    
+    public String toString(){
+        Iterator<AnyType> it = this.iterator();
+        StringBuffer sb = new StringBuffer();
+        while(it.hasNext()){
+            sb.append(it.next().toString()+",");
+        }
+        return sb.toString();
+        
+    }
     private class LinkedListIterator implements Iterator<AnyType>{
         private Node<AnyType> current = beginMarker.next;
         private int expectedModCount = modCount;
@@ -163,5 +203,20 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
             expectedModCount++;
         }
     }
-
+public static void main(String[] args) {
+    MyLinkedList<Integer> l = new MyLinkedList<Integer>();
+    MyLinkedList<Integer> items = new MyLinkedList<Integer>();
+    for(int i=0; i<10; i++){
+        l.add(i);
+        items.add(i);
+    }
+    for(int i=10; i<20; i++){
+        l.add(i);
+    }
+    System.out.println("items: "+items.toString());
+    System.out.println("l: "+l.toString());
+    l.removeAll(items);
+    System.out.println("l after remove items: "+l.toString());
+    
+}
 }

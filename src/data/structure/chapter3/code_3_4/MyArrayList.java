@@ -1,6 +1,7 @@
 package data.structure.chapter3.code_3_4;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class MyArrayList<AnyType> implements Iterable<AnyType>{
@@ -85,6 +86,14 @@ public class MyArrayList<AnyType> implements Iterable<AnyType>{
         return removedItem;
     }
     
+    public void addAll(Iterable<? extends AnyType> items){
+        Iterator<? extends AnyType> it = (Iterator<? extends AnyType>) items.iterator();
+        while(it.hasNext()){
+            this.add(it.next());
+        }
+        //O(n)
+    }
+    
     
     
     @Override
@@ -110,5 +119,63 @@ public class MyArrayList<AnyType> implements Iterable<AnyType>{
             MyArrayList.this.remove(--current);
         }
     }
+    
+    public ListIterator<AnyType> listIterator() {
+        return new MyListIterator();
+    }
+    
+    private class MyListIterator implements ListIterator<AnyType>{
+        private int current = 0;
+        
+        public boolean hasNext(){
+            return current < size();
+        }
 
+        public AnyType next() {
+            if( !hasNext()){
+                throw new NoSuchElementException();
+            }
+            return theItems[current++];
+        }
+        
+        public void remove(){
+            MyArrayList.this.remove(--current);
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public AnyType previous() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public int nextIndex() {
+            throw new UnsupportedOperationException("nextIndex");
+        }
+
+        @Override
+        public int previousIndex() {
+            throw new UnsupportedOperationException("previousIndex");
+        }
+
+        @Override
+        public void set(AnyType e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void add(AnyType e) {
+            // TODO Auto-generated method stub
+            
+        }
+    }
+    public static void main(String[] args) {
+    }
 }
